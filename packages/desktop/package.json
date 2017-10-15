@@ -101,6 +101,7 @@
     "github": "^9.0.0",
     "ijavascript": "^5.0.17",
     "jmp": "^0.7.5",
+    "markdown-it": "^8.4.0",
     "mathjax-electron": "^2.0.1",
     "uuid": "^3.1.0"
   },

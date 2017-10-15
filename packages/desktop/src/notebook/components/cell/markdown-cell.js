@@ -3,8 +3,8 @@
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
 
 import React from "react";
-import CommonMark from "commonmark";
-import MarkdownRenderer from "commonmark-react-renderer";
+import MarkdownIt from "markdown-it";
+var md = new MarkdownIt();
 
 import Editor from "../../providers/editor";
 import LatexRenderer from "../latex";
@@ -28,12 +28,10 @@ type State = {
   source: string
 };
 
-type MDRender = (input: string) => string;
+// type MDRender = (input: string) => string;
 
-const parser = new CommonMark.Parser();
-const renderer = new MarkdownRenderer();
-
-const mdRender: MDRender = input => renderer.render(parser.parse(input));
+// const parser = new CommonMark.Parser();
+// const renderer = new MarkdownRenderer();
 
 export default class MarkdownCell extends React.PureComponent<any, State> {
   openEditor: () => void;
@@ -139,6 +137,8 @@ export default class MarkdownCell extends React.PureComponent<any, State> {
   }
 
   render(): ?React$Element<any> {
+    console.log(this.state.source);
+    console.log(md.render(this.state.source));
     return this.state && this.state.view ? (
       <div
         className="rendered"
@@ -149,7 +149,7 @@ export default class MarkdownCell extends React.PureComponent<any, State> {
         }}
       >
         <LatexRenderer>
-          {mdRender(
+          {md.render(
             this.state.source
               ? this.state.source
               : "*Empty markdown cell, double click me to add content.*"
@@ -172,7 +172,7 @@ export default class MarkdownCell extends React.PureComponent<any, State> {
           />
         </div>
         <div className="outputs">
-          <LatexRenderer>{mdRender(this.state.source)}</LatexRenderer>
+          <LatexRenderer>{md.render(this.state.source)}</LatexRenderer>
         </div>
       </div>
     );
